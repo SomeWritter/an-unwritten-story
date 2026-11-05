@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An Unwritten Story by SomeWritter</title>
+<meta name="description" content="Illustrations from An Unwritten Story by SomeWritter. Pick your chapter and see the art up to it, with zero spoilers.">
+<meta name="theme-color" content="#0a0b18">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%92%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0b18;
+    --bg2: #14162b;
+    --ink: #ece8f6;
+    --muted: #8f8ba9;
+    --accent: #a596ff;
+    --accent-ink: #14102e;
+    --line: rgba(236, 232, 246, 0.13);
+    --display: "Fraunces", Georgia, "Times New Roman", serif;
+    --ui: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { background: var(--bg); color-scheme: dark; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: var(--ui);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Background glow, sits behind everything */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(900px 600px at 12% -10%, rgba(120, 100, 255, 0.22), transparent 60%),
+      radial-gradient(700px 500px at 100% 25%, rgba(60, 160, 200, 0.11), transparent 60%),
+      radial-gradient(800px 700px at 50% 125%, rgba(150, 80, 200, 0.15), transparent 60%);
+  }
+
+  /* Drifting letters */
+  #glyphs {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .wrap {
+    position: relative;
+    width: min(1100px, 100% - 2.5rem);
+    margin-inline: auto;
+    padding-bottom: 4rem;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: clamp(3.5rem, 11vw, 7.5rem) 0 2.4rem; }
+
+  h1 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3.2rem, 11.5vw, 7.6rem);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+  }
+
+  /* The one big moment: the title gets "written" left to right */
+  h1 .line {
+    display: block;
+    width: fit-content;
+    clip-path: inset(-20% 100% -20% 0);
+    animation: write 1.7s cubic-bezier(0.65, 0.05, 0.2, 1) forwards;
+  }
+  h1 .line:nth-child(1) { animation-delay: 0.25s; }
+  h1 .line:nth-child(2) { animation-delay: 1.35s; font-style: italic; }
+
+  @keyframes write {
+    to { clip-path: inset(-20% -5% -20% -5%); }
+  }
+
+  .byline {
+    margin: 1.4rem 0 0;
+    font-family: var(--display);
+    font-size: 1.25rem;
+    color: var(--muted);
+  }
+
+  .tagline {
+    margin: 1.6rem 0 0;
+    max-width: 36ch;
+    font-size: 1.15rem;
+    color: var(--ink);
+    opacity: 0.85;
+  }
+
+  /* ---------- Picker (sticks to the top while scrolling) ---------- */
+  .picker {
+    position: sticky;
+    top: 0.75rem;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 0.75rem 0.7rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(14, 15, 32, 0.74);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .picker label {
+    margin-right: auto;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.2rem;
+  }
+
+  .select-wrap { position: relative; }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    min-width: 13rem;
+    padding: 0.65rem 2.6rem 0.65rem 1rem;
+    font: 500 1rem var(--ui);
+    color: var(--ink);
+    background-color: var(--bg2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1.5l6 6 6-6' fill='none' stroke='%23a596ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  select option { background: #14162b; color: #ece8f6; }
+
+  .btn {
+    padding: 0.65rem 1.1rem;
+    font: 600 0.95rem var(--ui);
+    color: var(--accent-ink);
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.15s;
+  }
+  .btn:hover:not(:disabled) { filter: brightness(1.12); }
+  .btn.ghost {
+    width: 2.7rem;
+    padding-inline: 0;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--ink);
+    background: transparent;
+    border-color: var(--line);
+  }
+  .btn.ghost:hover:not(:disabled) { border-color: var(--accent); filter: none; }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ---------- Status + boundary ---------- */
+  .status {
+    margin: 1.4rem 0 0;
+    min-height: 1.6em;
+    color: var(--muted);
+    font-size: 0.97rem;
+    scroll-margin-top: 6rem;
+  }
+
+  /* Looks like a blank notebook page: this is the "unwritten" part */
+  .boundary {
+    margin: 1.2rem 0 2.6rem;
+    padding: 1.6rem 1.6rem 1.5rem;
+    border: 1.5px dashed rgba(165, 150, 255, 0.4);
+    border-radius: 10px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 31px,
+      rgba(165, 150, 255, 0.09) 31px 32px
+    );
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+    line-height: 32px;
+    color: var(--muted);
+  }
+
+  /* ---------- Chapters ---------- */
+  .chapter { margin: 0 0 3.4rem; }
+
+  .chapter-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .chapter-head::after {
+    content: "";
+    flex: 1;
+    min-width: 1.5rem;
+    height: 1px;
+    background: var(--line);
+    align-self: center;
+    order: 3;
+  }
+  .chapter-head h2 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.7rem, 4.2vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .bonus .chapter-head h2 { font-style: italic; }
+  .chapter-head .title {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.62em;
+    margin-left: 0.6rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 1.1rem;
+    align-items: start;
+  }
+
+  figure { margin: 0; }
+
+  .shot {
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    cursor: zoom-in;
+    transition: border-color 0.2s;
+  }
+  .shot:hover, .shot:focus-visible { border-color: var(--accent); }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot.broken { cursor: default; }
+
+  .placeholder {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .placeholder code { color: var(--accent); word-break: break-all; }
+
+  figcaption { margin-top: 0.55rem; font-size: 0.92rem; color: var(--muted); }
+
+  .empty {
+    padding: 3rem 0;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--muted);
+  }
+
+  footer {
+    width: min(1100px, 100% - 2.5rem);
+    margin: 0 auto;
+    padding: 2rem 0 3rem;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3.5rem 1rem 1.5rem;
+    background: rgba(5, 6, 14, 0.95);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: min(100%, 1400px);
+    max-height: calc(100vh - 9rem);
+    object-fit: contain;
+    border-radius: 6px;
+  }
+  .lb-cap { margin: 0.9rem 0 0; max-width: 60ch; text-align: center; color: var(--muted); font-size: 0.95rem; }
+  .lb-btn {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .lb-btn:hover { border-color: var(--accent); }
+  .lb-close { top: 0.9rem; right: 0.9rem; }
+  .lb-prev { left: 0.8rem; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 0.8rem; top: 50%; transform: translateY(-50%); }
+
+  @media (max-width: 560px) {
+    .picker label { width: 100%; }
+    .select-wrap { flex: 1; }
+    select { width: 100%; min-width: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 .line { animation: none; clip-path: none; }
+  }
+</style>
+</head>
+
+<body>
+<canvas id="glyphs" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <header class="hero">
+    <h1 aria-label="An Unwritten Story">
+      <span class="line" aria-hidden="true">An Unwritten</span>
+      <span class="line" aria-hidden="true">Story</span>
+    </h1>
+    <p class="byline">by SomeWritter</p>
+    <p class="tagline">Tell me which chapter you're on. You'll see the art up to there and nothing past it.</p>
+  </header>
+
+  <section class="picker" aria-label="Chapter picker">
+    <label for="chapterSelect">I'm on</label>
+    <button class="btn ghost" id="prevBtn" type="button" aria-label="Previous chapter">&lsaquo;</button>
+    <div class="select-wrap">
+      <select id="chapterSelect"></select>
+    </div>
+    <button class="btn" id="nextBtn" type="button">I finished this one</button>
+  </section>
+
+  <p class="status" id="status" aria-live="polite"></p>
+
+  <section id="gallery" aria-label="Illustrations"></section>
+</main>
+
+<footer>
+  <span id="copy"></span> An Unwritten Story by SomeWritter. Read it, love it, don't spoil it.
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Illustration viewer">
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous illustration">&lsaquo;</button>
+  <img id="lbImg" alt="">
+  <p class="lb-cap" id="lbCap"></p>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next illustration">&rsaquo;</button>
+</div>
+
+<!-- Your chapters live in this file. Edit that one, not this one. -->
+<script src="chapters.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  var SETTINGS = window.SITE_SETTINGS || {};
+  var FOLDER = SETTINGS.imageFolder || "images/";
+  var ALL = window.CHAPTERS || [];
+  // Normal chapters have a number. Bonus chapters don't.
+  var CHAPTERS = ALL.filter(function (c) { return typeof c.number === "number"; })
+    .sort(function (a, b) { return a.number - b.number; });
+  var BONUS = ALL.filter(function (c) { return typeof c.number !== "number"; });
+  var STORAGE_KEY = "unwritten-story-chapter";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var select = $("chapterSelect"), prevBtn = $("prevBtn"), nextBtn = $("nextBtn");
+  var gallery = $("gallery"), statusEl = $("status");
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  $("copy").textContent = "\u00A9 " + new Date().getFullYear();
+
+  /* ---------- helpers ---------- */
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+
+  function normalizeImages(chapter) {
+    return (chapter.images || []).map(function (item) {
+      if (typeof item === "string") return { src: FOLDER + item, caption: "" };
+      return { src: FOLDER + item.file, caption: item.caption || "" };
+    });
+  }
+
+  function loadSaved() {
+    try {
+      var v = parseInt(localStorage.getItem(STORAGE_KEY), 10);
+      return CHAPTERS.some(function (c) { return c.number === v; }) ? v : 0;
+    } catch (e) { return 0; }
+  }
+  function save(n) {
+    try { localStorage.setItem(STORAGE_KEY, String(n)); } catch (e) { /* private mode, no biggie */ }
+  }
+
+  /* ---------- picker ---------- */
+  function buildPicker() {
+    var first = el("option", "", "Pick a chapter");
+    first.value = "";
+    select.appendChild(first);
+    CHAPTERS.forEach(function (c) {
+      var label = "Chapter " + c.number;
+      if (SETTINGS.showTitlesInPicker && c.title) label += ": " + c.title;
+      var o = el("option", "", label);
+      o.value = String(c.number);
+      select.appendChild(o);
+    });
+  }
+
+  function currentIndex() {
+    var v = parseInt(select.value, 10);
+    for (var i = 0; i < CHAPTERS.length; i++) if (CHAPTERS[i].number === v) return i;
+    return -1;
+  }
+
+  function updateButtons() {
+    var i = currentIndex();
+    prevBtn.disabled = i <= 0;
+    nextBtn.disabled = i === CHAPTERS.length - 1;
+    nextBtn.textContent = i === -1 ? "Start at chapter " + (CHAPTERS[0] ? CHAPTERS[0].number : 1) : "I finished this one";
+  }
+
+  /* ---------- gallery ---------- */
+  var lbItems = [];
+
+  function render(n) {
+    gallery.textContent = "";
+    lbItems = [];
+    updateButtons();
+
+    if (!n) {
+      statusEl.textContent = "Spoiler shield is on. Nothing is shown until you pick a chapter.";
+      var empty = el("p", "empty", "Pick your chapter up there and the shelves fill up.");
+      gallery.appendChild(empty);
+      return;
+    }
+
+    // Only chapters up to the one you picked ever get built. Future art never even loads.
+    var visible = [];
+    CHAPTERS.forEach(function (c) {
+      if (c.number <= n) visible.push({ c: c, key: c.number });
+    });
+    // A bonus slots in just above the chapter it unlocks after.
+    BONUS.forEach(function (c, i) {
+      var after = typeof c.unlockAfter === "number" ? c.unlockAfter : 0;
+      if (after <= n) visible.push({ c: c, key: after + 0.5 + (BONUS.length - i) * 0.0001 });
+    });
+    visible.sort(function (a, b) { return b.key - a.key; });
+    var total = 0;
+
+    var lastNumber = CHAPTERS[CHAPTERS.length - 1].number;
+    var boundary = el("div", "boundary");
+    boundary.textContent = n >= lastNumber
+      ? "You're caught up with everything that exists. The next page is still blank."
+      : "Everything after chapter " + n + " is still unwritten, as far as you're concerned.";
+    gallery.appendChild(boundary);
+
+    visible.forEach(function (v) {
+      var c = v.c;
+      var isBonus = typeof c.number !== "number";
+      var where = isBonus ? (c.label || "Bonus") : "Chapter " + c.number;
+      var imgs = normalizeImages(c);
+      if (!imgs.length) return;
+
+      var sec = el("article", isBonus ? "chapter bonus" : "chapter");
+      var head = el("div", "chapter-head");
+      var h2 = el("h2", "", where);
+      if (c.title) h2.appendChild(el("span", "title", c.title));
+      head.appendChild(h2);
+      sec.appendChild(head);
+
+      var grid = el("div", "grid");
+      imgs.forEach(function (im) {
+        total++;
+        var fig = el("figure");
+        var btn = el("button", "shot");
+        btn.type = "button";
+
+        var img = new Image();
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.alt = im.caption || "Illustration from " + where;
+        img.src = im.src;
+
+        var idx = lbItems.length;
+        var item = { src: im.src, caption: im.caption, where: where, ok: true };
+        lbItems.push(item);
+
+        img.addEventListener("error", function () {
+          item.ok = false;
+          btn.classList.add("broken");
+          btn.textContent = "";
+          var ph = el("div", "placeholder");
+          ph.appendChild(document.createTextNode("Image not found. Looking for "));
+          ph.appendChild(el("code", "", im.src));
+          btn.appendChild(ph);
+        });
+
+        btn.addEventListener("click", function () { if (item.ok) openLightbox(idx); });
+        btn.appendChild(img);
+        fig.appendChild(btn);
+        if (im.caption) fig.appendChild(el("figcaption", "", im.caption));
+        grid.appendChild(fig);
+      });
+
+      sec.appendChild(grid);
+      gallery.appendChild(sec);
+    });
+
+    var firstNum = CHAPTERS[0].number;
+    var range = n === firstNum ? "chapter " + n : "chapters " + firstNum + " to " + n;
+    statusEl.textContent = total
+      ? "Showing " + total + (total === 1 ? " illustration" : " illustrations") + " from " + range + "."
+      : "No illustrations yet for " + range + ".";
+  }
+
+  function choose(n) {
+    select.value = n ? String(n) : "";
+    save(n || "");
+    render(n);
+    if (statusEl.getBoundingClientRect().top < 0) {
+      statusEl.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+  }
+
+  select.addEventListener("change", function () { choose(parseInt(select.value, 10) || 0); });
+  prevBtn.addEventListener("click", function () {
+    var i = currentIndex();
+    if (i > 0) choose(CHAPTERS[i - 1].number);
+  });
+  nextBtn.addEventListener("click", function () {
+    var i = currentIndex();
+    if (i < CHAPTERS.length - 1) choose(CHAPTERS[i + 1].number);
+  });
+
+  /* ---------- lightbox ---------- */
+  var lb = $("lightbox"), lbImg = $("lbImg"), lbCap = $("lbCap");
+  var lbIndex = 0, lastFocus = null;
+
+  function showLightbox(i) {
+    if (!lbItems.length) return;
+    lbIndex = (i + lbItems.length) % lbItems.length;
+    var it = lbItems[lbIndex];
+    lbImg.src = it.src;
+    lbImg.alt = it.caption || "Illustration from " + it.where;
+    lbCap.textContent = (it.caption ? it.caption + " " : "") + "(" + it.where + ")";
+  }
+  function openLightbox(i) {
+    lastFocus = document.activeElement;
+    showLightbox(i);
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+    $("lbClose").focus();
+  }
+  function closeLightbox() {
+    lb.classList.remove("open");
+    document.body.style.overflow = "";
+    lbImg.removeAttribute("src");
+    if (lastFocus) lastFocus.focus();
+  }
+
+  $("lbClose").addEventListener("click", closeLightbox);
+  $("lbPrev").addEventListener("click", function () { showLightbox(lbIndex - 1); });
+  $("lbNext").addEventListener("click", function () { showLightbox(lbIndex + 1); });
+  lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+  document.addEventListener("keydown", function (e) {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") showLightbox(lbIndex - 1);
+    if (e.key === "ArrowRight") showLightbox(lbIndex + 1);
+  });
+
+  var touchX = null;
+  lb.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) showLightbox(lbIndex + (dx < 0 ? 1 : -1));
+    touchX = null;
+  });
+
+  /* ---------- boot ---------- */
+  if (!CHAPTERS.length) {
+    statusEl.textContent = "No chapters found. Check that chapters.js sits next to index.html.";
+    select.disabled = prevBtn.disabled = nextBtn.disabled = true;
+  } else {
+    buildPicker();
+    var saved = loadSaved();
+    select.value = saved ? String(saved) : "";
+    render(saved);
+  }
+})();
+
+/* ---------- Background: faint letters drifting up like loose words ---------- */
+(function () {
+  "use strict";
+  var canvas = document.getElementById("glyphs");
+  if (!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext("2d");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var chars = "AnUnwrittenStoryaeiou\u2026\u201C\u201D;:\u2014".split("");
+  var W, H, dpr, glyphs = [];
+
+  function spawn(anywhere) {
+    return {
+      x: Math.random() * W,
+      y: anywhere ? Math.random() * H : H + 50 * dpr,
+      size: (14 + Math.random() * 30) * dpr,
+      ch: chars[Math.floor(Math.random() * chars.length)],
+      vy: (0.07 + Math.random() * 0.2) * dpr,
+      dx: (Math.random() - 0.5) * 0.1 * dpr,
+      rot: (Math.random() - 0.5) * 0.7,
+      vr: (Math.random() - 0.5) * 0.0015,
+      a: 0.05 + Math.random() * 0.12,
+      ph: Math.random() * 6.28
+    };
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.width = Math.floor(window.innerWidth * dpr);
+    H = canvas.height = Math.floor(window.innerHeight * dpr);
+    var n = Math.max(14, Math.min(42, Math.round(window.innerWidth * window.innerHeight / 34000)));
+    glyphs = [];
+    for (var i = 0; i < n; i++) glyphs.push(spawn(true));
+    if (reduce) frame(0);
+  }
+
+  function frame(t) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#b9afff";
+    for (var i = 0; i < glyphs.length; i++) {
+      var g = glyphs[i];
+      if (!reduce) {
+        g.y -= g.vy; g.x += g.dx; g.rot += g.vr;
+        if (g.y < -60 * dpr) glyphs[i] = g = spawn(false);
+      }
+      ctx.save();
+      ctx.translate(g.x, g.y);
+      ctx.rotate(g.rot);
+      ctx.globalAlpha = g.a * (0.65 + 0.35 * Math.sin(t / 2000 + g.ph));
+      ctx.font = "italic " + g.size + "px Fraunces, Georgia, serif";
+      ctx.fillText(g.ch, 0, 0);
+      ctx.restore();
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+
+  var timer;
+  window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(resize, 200); });
+  resize();
+  if (!reduce) requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
