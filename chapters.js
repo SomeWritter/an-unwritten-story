@@ -749,6 +749,18 @@ window.CHAPTERS = [
     title: "The Detectives Strike!",
     images: []
   },
+  {
+    number: 111,
+    title: "The Detectives Strike!",
+    images: []
+  },
+  {
+    number: 112,
+    title: "SON",
+    images: [
+      "cha-112-1.jpg",
+    ]
+  },
   // To add Chapter 6: copy a block above, paste it at the end (after a comma),
   // and change the number, title, and image names.
 ];
