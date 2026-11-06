@@ -758,7 +758,7 @@ window.CHAPTERS = [
     number: 112,
     title: "SON",
     images: [
-      "cha-112-1.jpg",
+      "cha112-1.jpg",
     ]
   },
   // To add Chapter 6: copy a block above, paste it at the end (after a comma),
